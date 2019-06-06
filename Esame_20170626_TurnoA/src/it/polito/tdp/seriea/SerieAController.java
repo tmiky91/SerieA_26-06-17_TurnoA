@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.seriea.model.Model;
+import it.polito.tdp.seriea.model.Team;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -24,7 +25,7 @@ public class SerieAController {
 	private URL location;
 
 	@FXML // fx:id="boxSquadra"
-	private ChoiceBox<?> boxSquadra; // Value injected by FXMLLoader
+	private ChoiceBox<Team> boxSquadra; // Value injected by FXMLLoader
 
 	@FXML // fx:id="boxStagione"
 	private ChoiceBox<?> boxStagione; // Value injected by FXMLLoader
@@ -46,12 +47,17 @@ public class SerieAController {
 	@FXML
 	void doAnalizzaSquadre(ActionEvent event) {
 		txtResult.setText(model.creaGrafo());
-		//boxSquadra.getItems().addAll(model.getVertici());
-
+		boxSquadra.getItems().addAll(model.getVertici());
 	}
 
 	@FXML
 	void doCalcolaConnessioniSquadra(ActionEvent event) {
+		Team t = boxSquadra.getValue();
+		if(t!=null) {
+			txtResult.setText(model.getAvversari(t));
+		}else {
+			showMessage("Errore: Seleziona una squadra dal menù a tendina dopo aver premuto il bottone Analizza Squadre");
+		}
 
 	}
 
